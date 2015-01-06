@@ -1,0 +1,35 @@
+cmake_minimum_required(VERSION 2.8)
+
+project(openigtlinkBuilder)
+
+include(ExternalProject)
+
+set(OPENIGTLINK_CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
+                           -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+                           -DBUILD_TESTING:BOOL=OFF
+                           -DBUILD_EXEMPLE:BOOL=OFF
+                           -DBUILD_DOCUMENTATION:BOOL=OFF
+                           -DBUILD_SHARED_LIBS:BOOL=ON
+                           -DOpenIGTLink_PROTOCOL_VERSION_2:BOOL=ON
+   )
+
+getCachedUrl(https://github.com/openigtlink/OpenIGTLink/archive/5a501817c2da52e81db4db3eca6dd5111f94fed9.tar.gz CACHED_URL)
+
+set(PATCH_CMD ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/patch/Source/igtlImageMessage.h "<SOURCE_DIR>/Source/igtlImageMessage.h"
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/patch/Source/igtlImageMessage.cxx "<SOURCE_DIR>/Source/igtlutil/igtlImageMessage.cxx")
+
+ExternalProject_Add(
+    openigtlink
+    URL ${CACHED_URL}
+    URL_HASH SHA256=dae54b032e061dd3f3ddd37291fdfc7fdb15181c5544ad8d74a8b93f06bc697f
+    DOWNLOAD_DIR ${ARCHIVE_DIR}
+    INSTALL_DIR ${CMAKE_INSTALL_PREFIX}
+    PATCH_COMMAND ${PATCH_CMD}
+    CMAKE_ARGS ${OPENIGTLINK_CMAKE_ARGS}
+    STEP_TARGETS CopyConfigFileToInstall
+)
+
+ExternalProject_Add_Step(openigtlink CopyConfigFileToInstall
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../cmake/findBinpkgs/fw-IGTL.cmake ${CMAKE_INSTALL_PREFIX}/fw-IGTL.cmake
+    COMMENT "Install configuration file"
+)
