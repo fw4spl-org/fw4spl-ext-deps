@@ -9,8 +9,7 @@ getCachedUrl(http://download.zeromq.org/zeromq-4.0.4.tar.gz CACHED_URL)
 
 if(WIN32)
     set(ZEROMQ_PATCH_DIR ${CMAKE_CURRENT_SOURCE_DIR}/patch)
-    set(ZEROMQ_CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} 
-                          -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+    set(ZEROMQ_CMAKE_ARGS ${COMMON_CMAKE_ARGS}
                           -DZMQ_BUILD_TESTS:BOOL=OFF
     )
 

@@ -4,8 +4,7 @@ project(openigtlinkBuilder)
 
 include(ExternalProject)
 
-set(OPENIGTLINK_CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
-                           -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+set(OPENIGTLINK_CMAKE_ARGS ${COMMON_CMAKE_ARGS}
                            -DBUILD_TESTING:BOOL=OFF
                            -DBUILD_EXEMPLE:BOOL=OFF
                            -DBUILD_DOCUMENTATION:BOOL=OFF

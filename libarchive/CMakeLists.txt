@@ -4,8 +4,7 @@ project(libarchiveBuilder)
 
 include(ExternalProject)
 
-set(LIBARCHIVE_CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
-                          -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+set(LIBARCHIVE_CMAKE_ARGS ${COMMON_CMAKE_ARGS}
                           -DENABLE_TEST:BOOL=OFF
 )
 
