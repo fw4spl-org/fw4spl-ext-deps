@@ -14,8 +14,19 @@ set(OPENIGTLINK_CMAKE_ARGS ${COMMON_CMAKE_ARGS}
 
 getCachedUrl(https://github.com/openigtlink/OpenIGTLink/archive/5a501817c2da52e81db4db3eca6dd5111f94fed9.tar.gz CACHED_URL)
 
-set(PATCH_CMD ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/patch/Source/igtlImageMessage.h "<SOURCE_DIR>/Source/igtlImageMessage.h"
+
+
+#Android don't need to link with pThread lib so we need to remove it of target link library
+#Furthermore lib OpenIGTLinkUtil needs to be linked with libm
+if(ANDROID)
+    set(PATCH_CMD ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/patch/Source/CMakeLists.txt "<SOURCE_DIR>/Source/CMakeLists.txt"
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/patch/Source/igtlutil/CMakeLists.txt "<SOURCE_DIR>/Source/igtlutil/CMakeLists.txt"
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/patch/Source/igtlImageMessage.h "<SOURCE_DIR>/Source/igtlImageMessage.h"
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/patch/Source/igtlImageMessage.cxx "<SOURCE_DIR>/Source/igtlutil/igtlImageMessage.cxx" )
+else()
+    set(PATCH_CMD ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/patch/Source/igtlImageMessage.h "<SOURCE_DIR>/Source/igtlImageMessage.h"
     COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/patch/Source/igtlImageMessage.cxx "<SOURCE_DIR>/Source/igtlutil/igtlImageMessage.cxx")
+endif()
 
 ExternalProject_Add(
     openigtlink

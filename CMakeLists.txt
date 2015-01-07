@@ -2,9 +2,15 @@ cmake_minimum_required(VERSION 2.8)
 
 project(ExtBinPkgs)
 
+if(ANDROID)
+    list(APPEND SUBDIRECTORIES openigtlink)
+    list(APPEND SUBDIRECTORIES libarchive)
+else()
     list(APPEND SUBDIRECTORIES libarchive)
     list(APPEND SUBDIRECTORIES openigtlink)
     list(APPEND SUBDIRECTORIES zeromq)
+endif()
+
 
 foreach(subdir ${SUBDIRECTORIES})
     # define an uninstall target for each project
