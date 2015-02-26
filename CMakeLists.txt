@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 2.8)
 
 project(ExtBinPkgs)
 
+option(ENABLE_WXWIDGETS "Set to ON to build wxWidgets library." OFF)
+
 if(ANDROID)
     list(APPEND SUBDIRECTORIES openigtlink)
     list(APPEND SUBDIRECTORIES libarchive)
@@ -11,6 +13,9 @@ else()
     list(APPEND SUBDIRECTORIES zeromq)
 endif()
 
+if(ENABLE_WXWIDGETS)
+    list(APPEND SUBDIRECTORIES wxWidgets)
+endif()
 
 foreach(subdir ${SUBDIRECTORIES})
     # define an uninstall target for each project
