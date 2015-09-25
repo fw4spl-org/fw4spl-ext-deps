@@ -18,30 +18,15 @@ find_path(ZeroMQ_ROOT_DIR
 )
 
 if(MSVC)
-  #add in all the names it can have on windows
-  if(CMAKE_GENERATOR_TOOLSET MATCHES "v140" OR MSVC14)
-    set(_zmq_TOOLSET "-v140")
-  elseif(CMAKE_GENERATOR_TOOLSET MATCHES "v120" OR MSVC12)
-    set(_zmq_TOOLSET "-v120")
-  elseif(CMAKE_GENERATOR_TOOLSET MATCHES "v110_xp")
-    set(_zmq_TOOLSET "-v110_xp")
-  elseif(CMAKE_GENERATOR_TOOLSET MATCHES "v110" OR MSVC11)
-    set(_zmq_TOOLSET "-v110")
-  elseif(CMAKE_GENERATOR_TOOLSET MATCHES "v100" OR MSVC10)
-    set(_zmq_TOOLSET "-v100")
-  elseif(CMAKE_GENERATOR_TOOLSET MATCHES "v90" OR MSVC90)
-    set(_zmq_TOOLSET "-v90")
-  endif()
-
-  set(_zmq_versions "4_0_4" "4_0_3" "4_0_2" "4_0_1" "4_0_0"
+  set(_zmq_versions "4_0_5" "4_0_4" "4_0_3" "4_0_2" "4_0_1" "4_0_0"
                     "3_2_5" "3_2_4" "3_2_3" "3_2_2"  "3_2_1" "3_2_0" "3_1_0")
   set(_zmq_release_names)
   set(_zmq_debug_names)
   foreach( ver ${_zmq_versions})
-    list(APPEND _zmq_release_names "libzmq${_zmq_TOOLSET}-mt-${ver}")
+    list(APPEND _zmq_release_names "libzmq-mt-${ver}")
   endforeach()
   foreach( ver ${_zmq_versions})
-    list(APPEND _zmq_debug_names "libzmq${_zmq_TOOLSET}-mt-gd-${ver}")
+    list(APPEND _zmq_debug_names "libzmq-mt-gd-${ver}")
   endforeach()
 
   #now try to find the release and debug version
@@ -70,7 +55,7 @@ if(MSVC)
 
 else()
   find_library(ZeroMQ_LIBRARY
-    NAMES zmq libzmq
+    NAMES zmq libzmq ZeroMQ
     HINTS ${ZeroMQ_ROOT_DIR}/lib
     )
 endif()

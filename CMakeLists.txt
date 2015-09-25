@@ -4,14 +4,9 @@ project(ExtBinPkgs)
 
 option(ENABLE_WXWIDGETS "Set to ON to build wxWidgets library." OFF)
 
-if(ANDROID)
-    list(APPEND SUBDIRECTORIES openigtlink)
-    list(APPEND SUBDIRECTORIES libarchive)
-else()
-    list(APPEND SUBDIRECTORIES libarchive)
-    list(APPEND SUBDIRECTORIES openigtlink)
-    list(APPEND SUBDIRECTORIES zeromq)
-endif()
+list(APPEND SUBDIRECTORIES libarchive)
+list(APPEND SUBDIRECTORIES openigtlink)
+list(APPEND SUBDIRECTORIES zeromq)
 
 if(ENABLE_WXWIDGETS)
     list(APPEND SUBDIRECTORIES wxWidgets)
