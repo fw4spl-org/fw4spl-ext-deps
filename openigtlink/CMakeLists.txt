@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.0)
 
 project(openigtlinkBuilder)
 
@@ -12,7 +12,7 @@ set(OPENIGTLINK_CMAKE_ARGS ${COMMON_CMAKE_ARGS}
                            -DOpenIGTLink_PROTOCOL_VERSION_2:BOOL=ON
    )
 
-getCachedUrl(https://github.com/openigtlink/OpenIGTLink/archive/5a501817c2da52e81db4db3eca6dd5111f94fed9.tar.gz CACHED_URL)
+set(CACHED_URL https://github.com/openigtlink/OpenIGTLink/archive/5a501817c2da52e81db4db3eca6dd5111f94fed9.tar.gz)
 
 
 
@@ -33,6 +33,7 @@ ExternalProject_Add(
     URL ${CACHED_URL}
     URL_HASH SHA256=dae54b032e061dd3f3ddd37291fdfc7fdb15181c5544ad8d74a8b93f06bc697f
     DOWNLOAD_DIR ${ARCHIVE_DIR}
+    DOWNLOAD_NAME openigtlink.tar.gz
     INSTALL_DIR ${CMAKE_INSTALL_PREFIX}
     PATCH_COMMAND ${PATCH_CMD}
     CMAKE_ARGS ${OPENIGTLINK_CMAKE_ARGS}

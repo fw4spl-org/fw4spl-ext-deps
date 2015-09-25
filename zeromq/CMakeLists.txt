@@ -1,10 +1,10 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+cmake_minimum_required(VERSION 3.0)
 
 PROJECT(zeromqBuilder)
 
 INCLUDE(ExternalProject)
 
-getCachedUrl(https://github.com/zeromq/zeromq4-x/archive/v4.0.5.tar.gz CACHED_URL)
+set(CACHED_URL https://github.com/zeromq/zeromq4-x/archive/v4.0.5.tar.gz)
 
 set(ZEROMQ_CMAKE_ARGS ${COMMON_CMAKE_ARGS} )
 
@@ -22,6 +22,7 @@ ExternalProject_Add(
     URL ${CACHED_URL}
     URL_HASH SHA256=e3dc99aeacd4e1e7a025f22f92afec6c381b82f0e29222d27e1256ada841e43f
     DOWNLOAD_DIR ${ARCHIVE_DIR}
+    DOWNLOAD_NAME zeromq_v4.0.5.tar.gz
     PATCH_COMMAND ${ZMQ_PATCH_COMMAND}
     INSTALL_DIR ${CMAKE_INSTALL_PREFIX}
     CMAKE_ARGS ${ZEROMQ_CMAKE_ARGS}

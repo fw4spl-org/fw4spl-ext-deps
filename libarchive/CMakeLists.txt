@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.0)
 
 project(libarchiveBuilder)
 
@@ -8,7 +8,7 @@ set(LIBARCHIVE_CMAKE_ARGS ${COMMON_CMAKE_ARGS}
                           -DENABLE_TEST:BOOL=OFF
 )
 
-getCachedUrl(http://www.libarchive.org/downloads/libarchive-3.1.2.zip CACHED_URL)
+set(CACHED_URL http://www.libarchive.org/downloads/libarchive-3.1.2.zip)
 
 set(PATCH_CMD "")
 
