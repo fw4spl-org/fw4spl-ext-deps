@@ -22,8 +22,7 @@ endif()
 
 if(UNIX)
     list(APPEND LIBARCHIVE_CMAKE_ARGS -DENABLE_ICONV:BOOL=OFF -DENABLE_EXPAT:BOOL=ON)
-    set(LIBARCHIVE_DEPENDS zlib expat)
-
+    set(LIBARCHIVE_DEPENDS zlib expat libxml)
 elseif(WIN32)
     list(APPEND LIBARCHIVE_CMAKE_ARGS -DENABLE_ICONV:BOOL=ON 
                                       -DENABLE_EXPAT:BOOL=OFF
