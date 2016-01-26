@@ -7,6 +7,7 @@ option(ENABLE_WXWIDGETS "Set to ON to build wxWidgets library." OFF)
 list(APPEND SUBDIRECTORIES libarchive)
 list(APPEND SUBDIRECTORIES openigtlink)
 list(APPEND SUBDIRECTORIES zeromq)
+list(APPEND SUBDIRECTORIES cgogn)
 
 if(ENABLE_WXWIDGETS)
     list(APPEND SUBDIRECTORIES wxWidgets)
