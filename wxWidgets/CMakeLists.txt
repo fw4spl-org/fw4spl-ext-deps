@@ -47,6 +47,7 @@ if(WIN32)
     ExternalProject_Add(
         wxWidgets
         URL ${CACHED_URL}
+        URL_HASH SHA256=346879dc554f3ab8d6da2704f651ecb504a22e9d31c17ef5449b129ed711585d
         DOWNLOAD_DIR ${ARCHIVE_DIR}
         CONFIGURE_COMMAND ""
         BINARY_DIR ${WX_SRC_DIR}/build/msw/
@@ -88,6 +89,7 @@ else()
     ExternalProject_Add(
         wxWidgets
         URL ${CACHED_URL}
+        URL_HASH SHA256=346879dc554f3ab8d6da2704f651ecb504a22e9d31c17ef5449b129ed711585d
         DOWNLOAD_DIR ${ARCHIVE_DIR}
         DEPENDS zlib jpeg libpng tiff expat freetype libiconv
         CONFIGURE_COMMAND ${SETENV} ${WX_CONFIGURE}
