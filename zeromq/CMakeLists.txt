@@ -15,7 +15,7 @@ if(WIN32)
 endif()
 
 set(ZEROMQ_PATCH_DIR ${CMAKE_CURRENT_SOURCE_DIR}/patch)
-set(ZMQ_PATCH_COMMAND ${CMAKE_COMMAND} -E  copy_if_different "${ZEROMQ_PATCH_DIR}/main_CMakeLists.txt" "<SOURCE_DIR>/CMakeLists.txt")
+set(ZMQ_PATCH_COMMAND ${PATCH_EXECUTABLE} -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/patch/CMakeLists.txt.diff -d <SOURCE_DIR>)
 
 ExternalProject_Add(
     zeromq
