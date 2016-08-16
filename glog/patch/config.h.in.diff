@@ -1,0 +1,12 @@
+diff --git a/src/config.h.in
+--- a/src/config.h.in
++++ b/src/config.h.in
+@@ -7,7 +7,7 @@
+ #define GOOGLE_NAMESPACE google
+ 
+ /* Define if you have the `dladdr' function */
+-#undef HAVE_DLADDR
++#define HAVE_DLADDR
+ 
+ /* Define to 1 if you have the <dlfcn.h> header file. */
+ #cmakedefine HAVE_DLFCN_H 1

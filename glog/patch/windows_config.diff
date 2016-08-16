@@ -1,0 +1,31 @@
+diff --git a/src/windows/config.h b/src/windows/config.h
+--- a/src/windows/config.h
++++ b/src/windows/config.h
+@@ -129,7 +129,7 @@
+    functions/classes. It's safe to define this here because config.h is only
+    used internally, to compile the DLL, and every DLL source file #includes
+    "config.h" before anything else. */
+-#ifndef GOOGLE_GLOG_DLL_DECL
++#ifdef GOOGLE_GLOG_DLL_DECL
+ # define GOOGLE_GLOG_IS_A_DLL  1   /* not set if you're statically linking */
+ # define GOOGLE_GLOG_DLL_DECL  __declspec(dllexport)
+ # define GOOGLE_GLOG_DLL_DECL_FOR_UNITTESTS  __declspec(dllimport)
+diff --git a/src/windows/glog/logging.h b/src/windows/glog/logging.h
+--- a/src/windows/glog/logging.h
++++ b/src/windows/glog/logging.h
+@@ -53,6 +53,7 @@
+ #include <vector>
+
+ // Annoying stuff for windows -- makes sure clients can import these functions
++
+ #ifndef GOOGLE_GLOG_DLL_DECL
+ # if defined(_WIN32) && !defined(__CYGWIN__) && 0
+ #   define GOOGLE_GLOG_DLL_DECL  __declspec(dllimport)
+@@ -85,7 +86,7 @@
+ #include <inttypes.h>           // a third place for uint16_t or u_int16_t
+ #endif
+
+-#if 0
++#if 1
+ #include <gflags/gflags.h>
+ #endif

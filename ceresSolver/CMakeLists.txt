@@ -1,0 +1,48 @@
+cmake_minimum_required(VERSION 2.8)
+
+project(ceresSolverBuilder)
+
+include(ExternalProject)
+
+set(CACHED_URL http://ceres-solver.org/ceres-solver-1.9.0.tar.gz)
+
+set(CERES_SOLVER_CMAKE_ARGS
+    ${COMMON_CMAKE_ARGS}
+
+    -DEIGEN_INCLUDE_DIR_HINTS:PATH=${CMAKE_INSTALL_PREFIX}/include/eigen3
+    -DGLOG_LIBRARY_DIR_HINTS:PATH=${CMAKE_INSTALL_PREFIX}/lib
+
+    -DCXSPARSE_LIBRARIES:PATH=${CMAKE_INSTALL_PREFIX}/lib
+    -DCXSPARSE_INCLUDE_DIRS:PATH=${CMAKE_INSTALL_PREFIX}/include/CXSpase
+    -DCXSPARSE_INCLUDE_DIR:PATH=${CMAKE_INSTALL_PREFIX}/include/CXSparse
+
+    -DLAPACK:BOOL=OFF # unused if you choose CXPARSE, only used by SUITESPARSE
+    -DSUITESPARSE:BOOL=OFF
+    -DCXSPARSE:BOOL=ON
+    -DGFLAGS:BOOL=ON # only needed to build examples and tests.
+    -DMINIGLOG:BOOL=OFF
+    -DSCHUR_SPECIALIZATIONS:BOOL=OFF
+    -DBUILD_DOCUMENTATION:BOOL=OFF
+    -DBUILD_TESTING:BOOL=OFF
+    -DBUILD_EXAMPLES:BOOL=OFF
+    -DBUILD_SHARED_LIBS:BOOL=ON
+    -DOPENMP:BOOL=OFF
+    -DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS} -std=c++11
+)
+
+set(CERES_PATCH_DIR ${CMAKE_CURRENT_SOURCE_DIR}/patch)
+set(CERES_PATCH_CMD ${PATCH_EXECUTABLE} -p1 -i ${CERES_PATCH_DIR}/FindGlog.cmake.diff -d <SOURCE_DIR>)
+
+if (UNIX AND NOT APPLE AND NOT ANDROID)
+    list (APPEND CERES_PATCH_CMD && "${PATCH_EXECUTABLE}" -p1 -i "${CERES_PATCH_DIR}/CMakeLists.diff" -d "<SOURCE_DIR>")
+endif()
+
+ExternalProject_Add(
+        ceresSolver
+        URL ${CACHED_URL}
+        DOWNLOAD_DIR ${ARCHIVE_DIR}
+        PATCH_COMMAND ${CERES_PATCH_CMD}
+        INSTALL_DIR ${CMAKE_INSTALL_PREFIX}
+        DEPENDS eigen glog CXSparse
+        CMAKE_ARGS ${CERES_SOLVER_CMAKE_ARGS}
+)
