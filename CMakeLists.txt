@@ -10,9 +10,13 @@ option(ENABLED_BUILD_PTAM "Set to ON to build PTAM dependencies" OFF)
 
 
 if(NOT ANDROID)
-    
-    list(APPEND SUBDIRECTORIES cgogn)
 
+    list(APPEND SUBDIRECTORIES cgogn)
+    list(APPEND SUBDIRECTORIES cryptopp)
+    if(NOT APPLE)
+        list(APPEND SUBDIRECTORIES curl)
+    endif()
+    
     if(ENABLE_EXPERIMENTAL_DEPS)
         list(APPEND SUBDIRECTORIES aram)
         list(APPEND SUBDIRECTORIES vlfeat)
