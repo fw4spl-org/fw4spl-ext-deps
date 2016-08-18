@@ -13,6 +13,7 @@ if(NOT ANDROID)
 
     list(APPEND SUBDIRECTORIES cgogn)
     list(APPEND SUBDIRECTORIES cryptopp)
+    list(APPEND SUBDIRECTORIES numpy)
     if(NOT APPLE)
         list(APPEND SUBDIRECTORIES curl)
     endif()
