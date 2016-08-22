@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.0)
 
 project(ExtBinPkgs)
 
+set(FWEXT_CMAKE_RESOURCE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+
 option(ENABLE_WXWIDGETS "Set to ON to build wxWidgets library." OFF)
 option(ENABLE_EXPERIMENTAL_DEPS "Set to ON to build experimentals libraries" OFF)
 option(ENABLED_BUILD_REALSENSE "Set to ON to build libRealSense" OFF)
