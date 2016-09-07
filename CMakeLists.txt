@@ -6,7 +6,7 @@ set(FWEXT_CMAKE_RESOURCE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 option(ENABLE_WXWIDGETS "Set to ON to build wxWidgets library." OFF)
 option(ENABLE_EXPERIMENTAL_DEPS "Set to ON to build experimentals libraries" OFF)
-option(ENABLED_BUILD_REALSENSE "Set to ON to build libRealSense" OFF)
+option(ENABLED_BUILD_INFINITAM "Set to ON to build infinitam" OFF)
 option(ENABLED_BUILD_ORB_SLAM2 "Set to ON to build ORB Slam 2" OFF)
 option(ENABLED_BUILD_PTAM "Set to ON to build PTAM dependencies" OFF)
 
@@ -25,15 +25,15 @@ if(NOT ANDROID)
         list(APPEND SUBDIRECTORIES vlfeat)
     endif()
     
-    if(ENABLED_BUILD_REALSENSE)
-        if (NOT ENABLED_PCL_DEPS AND UNIX)
-            # On Linux and OSX, libusb is required by libRealSense
-            list(APPEND SUBDIRECTORIES libusb)
+    if(ENABLED_BUILD_INFINITAM)
+        if(NOT ENABLED_REALSENSE)
+            message(WARNING "ENABLED_REALSENSE should be set to ON if you want to build infinitam")
+        else
+            list(APPEND SUBDIRECTORIES infinitam)
         endif()
-        list(APPEND SUBDIRECTORIES realsense)
-        list(APPEND SUBDIRECTORIES infinitam)
+        
     endif()
-    
+
     if(UNIX AND NOT APPLE)
         list(APPEND SUBDIRECTORIES vlc)
     endif()
