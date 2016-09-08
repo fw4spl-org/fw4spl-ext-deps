@@ -9,13 +9,18 @@ option(ENABLE_EXPERIMENTAL_DEPS "Set to ON to build experimentals libraries" OFF
 option(ENABLED_BUILD_INFINITAM "Set to ON to build infinitam" OFF)
 option(ENABLED_BUILD_ORB_SLAM2 "Set to ON to build ORB Slam 2" OFF)
 option(ENABLED_BUILD_PTAM "Set to ON to build PTAM dependencies" OFF)
+option(ENABLED_BUILD_NUMPY "Set to ON to build PTAM dependencies" OFF)
 
 
 if(NOT ANDROID)
 
     list(APPEND SUBDIRECTORIES cgogn)
     list(APPEND SUBDIRECTORIES cryptopp)
-    list(APPEND SUBDIRECTORIES numpy)
+
+    if (ENABLED_BUILD_NUMPY)
+        list(APPEND SUBDIRECTORIES numpy)
+    endif()
+    
     if(NOT APPLE)
         list(APPEND SUBDIRECTORIES curl)
     endif()
