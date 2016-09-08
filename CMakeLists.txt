@@ -19,25 +19,25 @@ if(NOT ANDROID)
     if(NOT APPLE)
         list(APPEND SUBDIRECTORIES curl)
     endif()
-    
+
     if(ENABLE_EXPERIMENTAL_DEPS)
         list(APPEND SUBDIRECTORIES aram)
         list(APPEND SUBDIRECTORIES vlfeat)
     endif()
-    
+
     if(ENABLED_BUILD_INFINITAM)
         if(NOT ENABLED_REALSENSE)
             message(WARNING "ENABLED_REALSENSE should be set to ON if you want to build infinitam")
-        else
+        else()
             list(APPEND SUBDIRECTORIES infinitam)
         endif()
-        
+
     endif()
 
     if(UNIX AND NOT APPLE)
         list(APPEND SUBDIRECTORIES vlc)
     endif()
-    
+
     if(ENABLED_BUILD_ORB_SLAM2)
         if (NOT ENABLED_SOFA_DEPS)
             # GLEW is required by Pangolin
@@ -46,14 +46,14 @@ if(NOT ANDROID)
         list(APPEND SUBDIRECTORIES pangolin)
         list(APPEND SUBDIRECTORIES orbslam2)
     endif()
-    
+
     if(ENABLED_BUILD_PTAM)
         list(APPEND SUBDIRECTORIES gflags)
         list(APPEND SUBDIRECTORIES glog)
         list(APPEND SUBDIRECTORIES CXSparse)
         list(APPEND SUBDIRECTORIES ceresSolver)
     endif()
-    
+
     if(ENABLE_WXWIDGETS)
         list(APPEND SUBDIRECTORIES wxWidgets)
     endif()
