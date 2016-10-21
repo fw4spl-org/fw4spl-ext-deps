@@ -53,7 +53,6 @@ if(NOT ANDROID)
     endif()
 
     if(ENABLED_BUILD_PTAM)
-        list(APPEND SUBDIRECTORIES gflags)
         list(APPEND SUBDIRECTORIES glog)
         list(APPEND SUBDIRECTORIES CXSparse)
         list(APPEND SUBDIRECTORIES ceresSolver)
