@@ -4,8 +4,9 @@ project(GFlagsBuilder)
 
 include(ExternalProject)
 
-set(CACHED_URL https://github.com/schuhschuh/gflags/archive/v2.1.2.tar.gz)
+set(CACHED_URL https://github.com/gflags/gflags/archive/v2.1.2.tar.gz)
 
+set(GFLAGS_PATCH_CMD "${PATCH_EXECUTABLE}" -p1 -i ${CMAKE_CURRENT_SOURCE_DIR}/patch/msvc2015.diff -d <SOURCE_DIR>)
 set(GFLAGS_CMAKE_ARGS ${COMMON_CMAKE_ARGS}
                       -DGFLAGS_NAMESPACE:STRING=google
                       -DBUILD_SHARED_LIBS:BOOL=ON
@@ -14,8 +15,10 @@ set(GFLAGS_CMAKE_ARGS ${COMMON_CMAKE_ARGS}
 ExternalProject_Add(
         gflags
         URL ${CACHED_URL}
+        URL_HASH SHA256=d8331bd0f7367c8afd5fcb5f5e85e96868a00fd24b7276fa5fcee1e5575c2662
         DOWNLOAD_DIR ${ARCHIVE_DIR}
-        DOWNLOAD_NAME gflags_v2.1.1.tar.gz
+        DOWNLOAD_NAME gflags_v2.1.2.tar.gz
+        PATCH_COMMAND ${GFLAGS_PATCH_CMD}
         INSTALL_DIR ${CMAKE_INSTALL_PREFIX}
         CMAKE_ARGS ${GFLAGS_CMAKE_ARGS}
 )
