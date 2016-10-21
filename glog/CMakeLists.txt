@@ -4,29 +4,22 @@ project(GlogBuilder)
 
 include(ExternalProject)
 
-set(CACHED_URL https://github.com/emzeat/google-glog/archive/a2854b7db529a95d54ada2e250cf884e761c26bd.tar.gz)
-
-set(GLOG_PATCH_DIR ${CMAKE_CURRENT_SOURCE_DIR}/patch)
-set(GLOG_PATCH_CMD ${PATCH_EXECUTABLE} -p1 -i ${GLOG_PATCH_DIR}/CMakeLists.diff -d <SOURCE_DIR>
-    COMMAND ${PATCH_EXECUTABLE} -p1 -i ${GLOG_PATCH_DIR}/logging.cc.diff -d <SOURCE_DIR>
-    COMMAND ${PATCH_EXECUTABLE} -p1 -i ${GLOG_PATCH_DIR}/windows_config.diff -d <SOURCE_DIR>
-    COMMAND ${PATCH_EXECUTABLE} -p1 -i ${GLOG_PATCH_DIR}/config.h.in.diff -d <SOURCE_DIR>
-)
+#download lat glog version (Oct 20, 2016) to have CMake build system
+set(CACHED_URL https://github.com/google/glog/archive/b6a5e0524c28178985f0d228e9eaa43808dbec3c.tar.gz)
 
 set(GLOG_CMAKE_ARGS ${COMMON_CMAKE_ARGS}
-                    -DGFLAGS_INCLUDE_DIRS=${CMAKE_INSTALL_PREFIX}/include
-                    -DGFLAGS_LIBRARY_DIRS=${CMAKE_INSTALL_PREFIX}/lib
                     -DBUILD_SHARED_LIBS:BOOL=ON
-            -DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS} -std=c++11
+                    -DBUILD_TESTING:BOOL=OFF
+                    -DWITH_GFLAGS:BOOL=OFF
+                    -DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS} -std=c++11
 )
 
 ExternalProject_Add(
         glog
         URL ${CACHED_URL}
+        URL_HASH SHA256=41aa28e67340b27c12fae27a6a0949682283eac6c85e4d38671acf73d37cad88
         DOWNLOAD_DIR ${ARCHIVE_DIR}
-        DOWNLOAD_NAME google-glog.tar.gz
-        DEPENDS gflags
-        PATCH_COMMAND ${GLOG_PATCH_CMD}
+        DOWNLOAD_NAME glog-0.3.4-rev-b6a5e05.tar.gz
         INSTALL_DIR ${CMAKE_INSTALL_PREFIX}
         CMAKE_ARGS ${GLOG_CMAKE_ARGS}
 )
