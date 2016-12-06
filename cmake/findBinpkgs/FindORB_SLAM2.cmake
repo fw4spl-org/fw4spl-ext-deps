@@ -19,8 +19,6 @@ find_path(G2O_INCLUDE_DIR NAMES config.h                 PATH_SUFFIXES include/O
 
 set(ORB_SLAM2_INCLUDE_DIRS ${ORB_SLAM2_INCLUDE_DIR} ${DBOW2_INCLUDE_DIR} ${G2O_INCLUDE_DIR})
 
-message(WARNING "${ORB_SLAM2_INCLUDE_DIRS}")
-
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(ORB_SLAM2 DEFAULT_MSG ORB_SLAM2_LIBRARY ORB_SLAM2_INCLUDE_DIRS)
 
