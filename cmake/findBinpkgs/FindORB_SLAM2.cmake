@@ -17,7 +17,7 @@ find_path(ORB_SLAM2_INCLUDE_DIR NAMES orb_slam2_export.h PATH_SUFFIXES include/O
 find_path(DBOW2_INCLUDE_DIR NAMES dbow2_export.h         PATH_SUFFIXES include/ORB_SLAM2/Thirdparty/DBoW2/)
 find_path(G2O_INCLUDE_DIR NAMES config.h                 PATH_SUFFIXES include/ORB_SLAM2/Thirdparty/g2o/)
 
-set(ORB_SLAM2_INCLUDE_DIRS ${ORB_SLAM2_INCLUDE_DIR} ${DBOW2_INCLUDE_DIR} ${G2O_INCLUDE_DIR})
+set(ORB_SLAM2_INCLUDE_DIRS ${ORB_SLAM2_INCLUDE_DIR} ${DBOW2_INCLUDE_DIR} ${G2O_INCLUDE_DIR} ${G2O_INCLUDE_DIR}/g2o)
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(ORB_SLAM2 DEFAULT_MSG ORB_SLAM2_LIBRARY ORB_SLAM2_INCLUDE_DIRS)
