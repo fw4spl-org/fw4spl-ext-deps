@@ -39,7 +39,7 @@ if(NOT ANDROID)
 
     endif()
 
-    if(UNIX AND NOT APPLE)
+    if(NOT APPLE)
         list(APPEND SUBDIRECTORIES vlc)
     endif()
 
