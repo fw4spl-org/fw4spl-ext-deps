@@ -39,9 +39,7 @@ if(NOT ANDROID)
 
     endif()
 
-    if(NOT APPLE)
-        list(APPEND SUBDIRECTORIES vlc)
-    endif()
+    list(APPEND SUBDIRECTORIES vlc)
 
     if(ENABLED_BUILD_ORB_SLAM2)
         if (NOT ENABLED_SOFA_DEPS)

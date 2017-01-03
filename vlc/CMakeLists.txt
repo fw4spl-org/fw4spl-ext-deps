@@ -24,21 +24,25 @@ if(WIN32)
     ExternalProject_Add_Step(vlc COPY_FILES
         COMMAND ${CMAKE_COMMAND} -D SRC:PATH=${INSTALL_PREFIX_vlc} -D DST:PATH=${CMAKE_INSTALL_PREFIX} -P ${CMAKE_SOURCE_DIR}/Install.cmake
         DEPENDEES install
-    ) 
+    )
 else()
+
     find_path(VLC_INCLUDE_DIR vlc/vlc.h PATHS
         /usr/include
         /usr/local/include
+        /Applications/VLC.app/Contents/MacOS/include
     )
 
     find_library(VLC_LIBRARY NAMES vlc PATHS
         /usr/lib
         /usr/local/lib
+        /Applications/VLC.app/Contents/MacOS/lib
     )
 
     find_library(VLC_CORE_LIBRARY NAMES vlccore PATHS
         /usr/lib
         /usr/local/lib
+        /Applications/VLC.app/Contents/MacOS/lib
     )
 
     if(${VLC_INCLUDE_DIR} STREQUAL VLC_INCLUDE_DIR-NOTFOUND)
@@ -51,42 +55,98 @@ else()
                             "You must install them, i.e. on Debian sudo apt-get install libvlc.")
     endif()
 
-    string(FIND ${VLC_LIBRARY} "/" PATH_FILE_INDEX REVERSE)
-    string(SUBSTRING ${VLC_LIBRARY} 0 ${PATH_FILE_INDEX} PATH_DIR)
 
-    # We use cp command directly from a shell to be able to use a wildcard
-    # This is not the most elegant way but as we are only on Linux this is okish...
-    ExternalProject_Add(
-        vlc
-        DOWNLOAD_COMMAND echo "Nothing to download..."
-        DOWNLOAD_DIR ${ARCHIVE_DIR}
-        CONFIGURE_COMMAND echo "Nothing to configure..."
-        BUILD_COMMAND echo "Nothing to build..."
-        INSTALL_COMMAND sh -c "cp ${VLC_LIBRARY}* ${CMAKE_INSTALL_PREFIX}/lib"
-                COMMAND sh -c "cp ${VLC_CORE_LIBRARY}* ${CMAKE_INSTALL_PREFIX}/lib"
-                COMMAND ${CMAKE_COMMAND} -E copy_directory ${PATH_DIR}/vlc ${CMAKE_INSTALL_PREFIX}/lib/vlc
-        INSTALL_DIR ${CMAKE_INSTALL_PREFIX}
-    )
+    if (APPLE)
+        set (VLC_INSTALL_FILES)
 
-    ExternalProject_Add_Step(vlc CopyConfigFileToInstall
-        COMMAND ${CMAKE_INSTALL_PREFIX}/lib/vlc/vlc-cache-gen ${CMAKE_INSTALL_PREFIX}/lib/vlc/plugins/
-        COMMENT "Generate plugin cache"
-        DEPENDEES install
-    )
-    
-    # Create the uninstall log to allow uninstalling
-    string(REPLACE "${PATH_DIR}/" "" VLC_LIBRARY_NAME ${VLC_LIBRARY})
-    string(REPLACE "${PATH_DIR}/" "" VLC_CORE_LIBRARY_NAME ${VLC_CORE_LIBRARY})
-    string(APPEND VLC_INSTALL_FILES ${CMAKE_INSTALL_PREFIX}/lib/${VLC_LIBRARY_NAME} "\n" ${CMAKE_INSTALL_PREFIX}/lib/${VLC_CORE_LIBRARY_NAME} "\n")
+        get_filename_component(PATH_DIR ${VLC_INCLUDE_DIR} DIRECTORY)
+        get_filename_component(VLC_LIB_DIR ${VLC_LIBRARY} DIRECTORY)
 
-    file(GLOB_RECURSE VLC_PLUGIN_FILES ${CMAKE_INSTALL_PREFIX}/lib/vlc/*.*)
+        get_filename_component(VLC_LIB_NAME ${VLC_LIBRARY} NAME_WE)
+        get_filename_component(VLC_CORE_LIB_NAME ${VLC_CORE_LIBRARY} NAME_WE)
 
-    foreach(FILE ${VLC_PLUGIN_FILES})
-        string(APPEND VLC_INSTALL_FILES ${FILE} "\n")
-    endforeach()
+        set (VLC_PLUGIN_DIR "${PATH_DIR}/plugins")
 
-    file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/vlc-prefix/src/vlc-build/install_manifest.txt ${VLC_INSTALL_FILES})
+        ExternalProject_Add(
+            vlc
+            DOWNLOAD_COMMAND echo "Nothing to download..."
+            DOWNLOAD_DIR ${ARCHIVE_DIR}
+            CONFIGURE_COMMAND echo "Nothing to configure..."
+            BUILD_COMMAND echo "Nothing to build..."
+            INSTALL_COMMAND sh -c "cp ${VLC_LIB_DIR}/${VLC_LIB_NAME}* ${CMAKE_INSTALL_PREFIX}/lib"
+                    COMMAND sh -c "cp ${VLC_LIB_DIR}/${VLC_CORE_LIB_NAME}* ${CMAKE_INSTALL_PREFIX}/lib"
+                    COMMAND ${CMAKE_COMMAND} -E copy_directory ${VLC_INCLUDE_DIR} ${CMAKE_INSTALL_PREFIX}/include
+                    COMMAND ${CMAKE_COMMAND} -E copy_directory ${VLC_PLUGIN_DIR} ${CMAKE_INSTALL_PREFIX}/vlc/plugins
+            INSTALL_DIR ${CMAKE_INSTALL_PREFIX}
+        )
 
+        # Retrieve all the installed files to write install_manifest
+        file(GLOB VLC_LIBRARIES ${VLC_LIB_DIR}/${VLC_LIB_NAME}.*dylib)
+        file(GLOB VLC_CORE_LIBRARIES ${VLC_LIB_DIR}/${VLC_CORE_LIB_NAME}.*dylib)
+
+        foreach(LIB ${VLC_LIBRARIES})
+            string(REPLACE "${PATH_DIR}/" "${CMAKE_INSTALL_PREFIX}/" LIB ${LIB})
+            string(APPEND VLC_INSTALL_FILES ${LIB} "\n")
+        endforeach()
+
+        foreach(LIB ${VLC_CORE_LIBRARIES})
+            string(REPLACE "${PATH_DIR}/" "${CMAKE_INSTALL_PREFIX}/" LIB ${LIB})
+            string(APPEND VLC_INSTALL_FILES ${LIB} "\n")
+        endforeach()
+
+        file(GLOB_RECURSE VLC_PLUGIN_FILES ${VLC_PLUGIN_DIR}/*.*)
+
+        foreach(PLUGIN ${VLC_PLUGIN_FILES})
+            string(REPLACE "${PATH_DIR}/" "${CMAKE_INSTALL_PREFIX}/vlc/" PLUGIN ${PLUGIN})
+            string(APPEND VLC_INSTALL_FILES ${PLUGIN} "\n")
+        endforeach()
+
+        file(GLOB_RECURSE VLC_INCLUDE_FILES ${VLC_INCLUDE_DIR}/vlc/*.h)
+
+        foreach(FILE ${VLC_INCLUDE_FILES})
+            string(REPLACE "${PATH_DIR}/" "${CMAKE_INSTALL_PREFIX}/" FILE ${FILE})
+            string(APPEND VLC_INSTALL_FILES ${FILE} "\n")
+        endforeach()
+
+        file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/vlc-prefix/src/vlc-build/install_manifest.txt ${VLC_INSTALL_FILES})
+
+    else()
+
+        string(FIND ${VLC_LIBRARY} "/" PATH_FILE_INDEX REVERSE)
+        string(SUBSTRING ${VLC_LIBRARY} 0 ${PATH_FILE_INDEX} PATH_DIR)
+
+        # We use cp command directly from a shell to be able to use a wildcard
+        # This is not the most elegant way but as we are only on Linux this is okish...
+        ExternalProject_Add(
+            vlc
+            DOWNLOAD_COMMAND echo "Nothing to download..."
+            DOWNLOAD_DIR ${ARCHIVE_DIR}
+            CONFIGURE_COMMAND echo "Nothing to configure..."
+            BUILD_COMMAND echo "Nothing to build..."
+            INSTALL_COMMAND sh -c "cp ${VLC_LIBRARY}* ${CMAKE_INSTALL_PREFIX}/lib"
+                    COMMAND sh -c "cp ${VLC_CORE_LIBRARY}* ${CMAKE_INSTALL_PREFIX}/lib"
+                    COMMAND ${CMAKE_COMMAND} -E copy_directory ${PATH_DIR}/vlc ${CMAKE_INSTALL_PREFIX}/lib/vlc
+            INSTALL_DIR ${CMAKE_INSTALL_PREFIX}
+        )
+
+        ExternalProject_Add_Step(vlc CopyConfigFileToInstall
+            COMMAND ${CMAKE_INSTALL_PREFIX}/lib/vlc/vlc-cache-gen ${CMAKE_INSTALL_PREFIX}/lib/vlc/plugins/
+            COMMENT "Generate plugin cache"
+            DEPENDEES install
+        )
+
+        # Create the uninstall log to allow uninstalling
+        string(REPLACE "${PATH_DIR}/" "" VLC_LIBRARY_NAME ${VLC_LIBRARY})
+        string(REPLACE "${PATH_DIR}/" "" VLC_CORE_LIBRARY_NAME ${VLC_CORE_LIBRARY})
+        string(APPEND VLC_INSTALL_FILES ${CMAKE_INSTALL_PREFIX}/lib/${VLC_LIBRARY_NAME} "\n" ${CMAKE_INSTALL_PREFIX}/lib/${VLC_CORE_LIBRARY_NAME} "\n")
+
+        file(GLOB_RECURSE VLC_PLUGIN_FILES ${CMAKE_INSTALL_PREFIX}/lib/vlc/*.*)
+
+        foreach(FILE ${VLC_PLUGIN_FILES})
+            string(APPEND VLC_INSTALL_FILES ${FILE} "\n")
+        endforeach()
+
+        file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/vlc-prefix/src/vlc-build/install_manifest.txt ${VLC_INSTALL_FILES})
+
+    endif()
 endif()
-
-
