@@ -20,3 +20,9 @@ ExternalProject_Add(
     CMAKE_ARGS ${ORBSLAM2_CMAKE_ARGS} 
 )
 
+ExternalProject_Add_Step(orbslam2 CopyFindFileToInstall
+    COMMAND ${CMAKE_COMMAND} -E copy ${FWEXT_CMAKE_RESOURCE_PATH}/findBinpkgs/FindORB_SLAM2.cmake
+                                     ${CMAKE_INSTALL_PREFIX}/FindORB_SLAM2.cmake
+    COMMENT "Install FindORB_SLAM2.cmake file"
+    DEPENDEES install
+)
