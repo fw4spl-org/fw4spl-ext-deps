@@ -4,11 +4,10 @@ project(pangolinBuilder)
 
 include(ExternalProject)
 
-set(CACHED_URL https://github.com/stevenlovegrove/Pangolin/archive/v0.3.tar.gz)
+set(CACHED_URL https://github.com/fw4spl-org/Pangolin/archive/v0.5.1.tar.gz)
 
 set(PANGOLIN_CMAKE_ARGS ${COMMON_CMAKE_ARGS}
     -DBUILD_SHARED_LIBS=True
-    -DCPP11_NO_BOOST=True
     -DBUILD_PANGOLIN_VIDEO=True
     -DBUILD_PANGOLIN_GUI=True
     -DBUILD_PANGOLIN_PYTHON=False
@@ -18,15 +17,11 @@ set(PANGOLIN_CMAKE_ARGS ${COMMON_CMAKE_ARGS}
     -DBUILD_EXTERN_LIBPNG=False
 )
 
-set(PANGOLIN_PATCH_DIR ${CMAKE_CURRENT_SOURCE_DIR}/patch)
-set(PANGOLIN_PATCH_CMD "${PATCH_EXECUTABLE}" -p1 -i ${PANGOLIN_PATCH_DIR}/pangolin.diff -d <SOURCE_DIR>)
-
 ExternalProject_Add(pangolin
     URL ${CACHED_URL}
-    URL_HASH SHA256=8881c1102671ea99c241b273474ca7a5b3377fbde9c7d376253424c36d8ed678
-    DOWNLOAD_NAME pangolin-0.3.tar.gz
+    URL_HASH SHA256=94eb6804af19366effde868a5d629271330e9bf3439d86a0a4db2ca1eef55ad7
+    DOWNLOAD_NAME pangolin-0.5.1.tar.gz
     DOWNLOAD_DIR ${ARCHIVE_DIR}
-    PATCH_COMMAND ${PANGOLIN_PATCH_CMD}
     DEPENDS glew eigen jpeg libpng
     INSTALL_DIR ${CMAKE_INSTALL_PREFIX}
     CMAKE_ARGS ${PANGOLIN_CMAKE_ARGS}
