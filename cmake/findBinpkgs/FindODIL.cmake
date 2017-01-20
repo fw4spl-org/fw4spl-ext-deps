@@ -11,19 +11,15 @@
 # ODIL_LIBRARIES The ODIL libraries
 # ODIL_INCLUDE_DIR The location of odil headers
 
-message( ${ODIL_INCLUDE_DIR})
-
 find_path(ODIL_INCLUDE_DIR
     NAMES
         include/odil/odil.h
 )
 
-
 find_library(ODIL_LIBRARY
     NAMES odil libodil
     HINTS lib
 )
-
 
 include(FindPackageHandleStandardArgs)
 
