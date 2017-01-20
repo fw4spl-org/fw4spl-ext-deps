@@ -38,11 +38,6 @@ else()
                         -DBoost_USE_MULTITHREADED=ON
                         -DBoost_COMPILER:STRING=${Boost_COMPILER}
                         -DCMAKE_CXX_FLAGS:STRING=-std=c++11
-                        -DLog4Cpp_LIBRARY:PATH=${CMAKE_INSTALL_PREFIX}/lib
-                        -DJsonCpp_LIBRARY:PATH=${CMAKE_INSTALL_PREFIX}/lib
-                        -DICU_LIBRARY:PATH=${CMAKE_INSTALL_PREFIX}/lib
-                        -DLog4Cpp_INCLUDE_DIR:PATH=${CMAKE_INSTALL_PREFIX}/include
-                        -DJsonCpp_INCLUDE_DIR:PATH=${CMAKE_INSTALL_PREFIX}/include
     )
 endif()
 
