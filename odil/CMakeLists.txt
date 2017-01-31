@@ -15,7 +15,7 @@ if(WIN32)
     endforeach()
     
     # Add exception flag for noexcept keyword
-    set(ODIL_CMAKE_CXX_FLAGS "/EHsc /DWIN32 ${ODIL_CMAKE_CXX_FLAGS}")
+    set(ODIL_CMAKE_CXX_FLAGS "${ODIL_CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS}")
     
     set(ODIL_CMAKE_ARGS ${COMMON_CMAKE_ARGS}
                         -DBUILD_WRAPPERS=OFF
