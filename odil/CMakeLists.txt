@@ -44,9 +44,9 @@ endif()
 ExternalProject_Add(
     odil
     URL ${CACHED_URL}
-    URL_HASH SHA256=bc03fa3492d1270a3f1afb01f0e6e370d6bf8c8e9bd4f795828ae74ec50c8bbe
+    URL_HASH SHA256=ad1768090c7b4b7021865f2d259c413cd3a81cccb03e630cb462527c37797340
     DOWNLOAD_DIR ${ARCHIVE_DIR}
-    DOWNLOAD_NAME odil-0.7.0.1.zip
+    DOWNLOAD_NAME odil-with-windows-support.zip
     DEPENDS boost dcmtk jsoncpp icu4c log4cpp 
     INSTALL_DIR ${CMAKE_INSTALL_PREFIX}
     CMAKE_ARGS ${ODIL_CMAKE_ARGS}
