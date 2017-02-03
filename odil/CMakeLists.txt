@@ -5,7 +5,7 @@ project(odilBuilder)
 include(ExternalProject)
 include( ${CMAKE_SOURCE_DIR}/cmake/findBinpkgs/fw-boost.cmake )
 
-set(CACHED_URL https://github.com/fw4spl-org/odil/archive/fix_windows_build.zip)
+set(CACHED_URL https://github.com/fw4spl-org/odil/archive/Fixed-Windows-build.zip)
 
 if(WIN32)
     # Grab compile definitions from fw-boost.cmake
@@ -44,7 +44,7 @@ endif()
 ExternalProject_Add(
     odil
     URL ${CACHED_URL}
-    URL_HASH SHA256=ad1768090c7b4b7021865f2d259c413cd3a81cccb03e630cb462527c37797340
+    URL_HASH SHA256=8f01dbc8f404660c91204924b18216c378765877ab87a5dfa3152ca6cd29cb84
     DOWNLOAD_DIR ${ARCHIVE_DIR}
     DOWNLOAD_NAME odil-with-windows-support.zip
     DEPENDS boost dcmtk jsoncpp icu4c log4cpp 
