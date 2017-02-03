@@ -15,8 +15,6 @@ set(LOG4CPP_CMAKE_ARGS ${COMMON_CMAKE_ARGS}
 )
 
 if(WIN32)
-	set(LOG4CPP_CMAKE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
-   
 	ExternalProject_Add(
         log4cpp
         URL ${CACHED_URL}
