@@ -1,0 +1,15 @@
+diff -uNr a/InfiniTAM/CMakeLists.txt b/InfiniTAM/CMakeLists.txt
+--- a/InfiniTAM/CMakeLists.txt	2017-02-06 09:56:15.000000000 +0100
++++ b/InfiniTAM/CMakeLists.txt	2017-02-06 10:03:03.000000000 +0100
+@@ -50,9 +50,10 @@
+ 
+ if(APPLE)
+   set(CUDA_HOST_COMPILER /usr/bin/clang)
++  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations -Wno-unused-function")
+ endif(APPLE)
+ 
+-IF("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
++IF("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" AND NOT APPLE)
+   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libstdc++ -Wno-deprecated-declarations -Wno-unused-function")
+   set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -stdlib=libstdc++")
+ ENDIF()
