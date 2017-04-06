@@ -10,7 +10,7 @@ option(ENABLED_BUILD_INFINITAM "Set to ON to build infinitam" OFF)
 option(ENABLED_BUILD_ORB_SLAM2 "Set to ON to build ORB Slam 2" OFF)
 option(ENABLED_BUILD_PTAM "Set to ON to build PTAM dependencies" OFF)
 option(ENABLED_BUILD_NUMPY "Set to ON to build numpy dependencies" OFF)
-option(ENABLE_ODIL "Set to ON to build Odil dependencies" OFF)
+
 
 
 if(NOT ANDROID)
@@ -59,12 +59,6 @@ if(NOT ANDROID)
 
     if(ENABLE_WXWIDGETS)
         list(APPEND SUBDIRECTORIES wxWidgets)
-    endif()
-
-    if(ENABLE_ODIL)
-        list(APPEND SUBDIRECTORIES jsoncpp)
-        list(APPEND SUBDIRECTORIES log4cpp)
-        list(APPEND SUBDIRECTORIES odil)
     endif()
 
 else()
