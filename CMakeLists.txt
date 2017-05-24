@@ -8,10 +8,7 @@ option(ENABLE_WXWIDGETS "Set to ON to build wxWidgets library." OFF)
 option(ENABLE_EXPERIMENTAL_DEPS "Set to ON to build experimentals libraries" OFF)
 option(ENABLED_BUILD_INFINITAM "Set to ON to build infinitam" OFF)
 option(ENABLED_BUILD_ORB_SLAM2 "Set to ON to build ORB Slam 2" OFF)
-option(ENABLED_BUILD_PTAM "Set to ON to build PTAM dependencies" OFF)
 option(ENABLED_BUILD_NUMPY "Set to ON to build numpy dependencies" OFF)
-
-
 
 if(NOT ANDROID)
 
@@ -49,12 +46,6 @@ if(NOT ANDROID)
         endif()
         list(APPEND SUBDIRECTORIES pangolin)
         list(APPEND SUBDIRECTORIES orbslam2)
-    endif()
-
-    if(ENABLED_BUILD_PTAM)
-        list(APPEND SUBDIRECTORIES glog)
-        list(APPEND SUBDIRECTORIES CXSparse)
-        list(APPEND SUBDIRECTORIES ceresSolver)
     endif()
 
     if(ENABLE_WXWIDGETS)
