@@ -1,6 +1,8 @@
-unset(VLFEAT_DEBUG)
+
 if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
     set(VLFEAT_DEBUG "debug")
+else()
+    set(VLFEAT_DEBUG "release")
 endif()
 
 ExternalProject_Add(
