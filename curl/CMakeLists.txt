@@ -15,9 +15,13 @@ set(CURL_CMAKE_ARGS ${COMMON_CMAKE_ARGS}
 )
 set(CACHED_URL https://github.com/bagder/curl/archive/curl-7_38_0.tar.gz)
 
+if(NOT CMAKE_SYSTEM_NAME STREQUAL Linux)
+    set(CURL_DEPENDS zlib)
+endif()
+
 ExternalProject_Add(
     curl
-    DEPENDS zlib
+    DEPENDS ${CURL_DEPENDS}
     URL ${CACHED_URL}
     URL_HASH SHA256=2472ff2465216de7b57396868d1d61a25862ee501ae8cedcb2f5ad4130a7932b
     DOWNLOAD_DIR ${ARCHIVE_DIR}
