@@ -40,10 +40,6 @@ if(NOT ANDROID)
     list(APPEND SUBDIRECTORIES vlc)
 
     if(ENABLED_BUILD_ORB_SLAM2)
-        if (NOT ENABLED_SOFA_DEPS)
-            # GLEW is required by Pangolin
-            list(APPEND SUBDIRECTORIES glew)
-        endif()
         list(APPEND SUBDIRECTORIES pangolin)
         list(APPEND SUBDIRECTORIES orbslam2)
     endif()
