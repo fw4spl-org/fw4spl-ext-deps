@@ -4,7 +4,6 @@ project(ExtBinPkgs)
 
 set(FWEXT_CMAKE_RESOURCE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
-option(ENABLE_WXWIDGETS "Set to ON to build wxWidgets library." OFF)
 option(ENABLE_EXPERIMENTAL_DEPS "Set to ON to build experimentals libraries" OFF)
 option(ENABLED_BUILD_INFINITAM "Set to ON to build infinitam" OFF)
 option(ENABLED_BUILD_ORB_SLAM2 "Set to ON to build ORB Slam 2" OFF)
@@ -38,11 +37,6 @@ if(NOT ANDROID)
         list(APPEND SUBDIRECTORIES pangolin)
         list(APPEND SUBDIRECTORIES orbslam2)
     endif()
-
-    if(ENABLE_WXWIDGETS)
-        list(APPEND SUBDIRECTORIES wxWidgets)
-    endif()
-
 else()
     if(ENABLE_EXPERIMENTAL_DEPS)
         list(APPEND SUBDIRECTORIES ndkgui)
