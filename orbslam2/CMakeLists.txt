@@ -13,7 +13,7 @@ set(ORBSLAM2_CMAKE_ARGS ${COMMON_CMAKE_ARGS}
 ExternalProject_Add(
     orbslam2
     URL ${CACHED_URL}
-    URL_HASH SHA256=9858fec6203e6876a66d05ec7eb1f5c061c41e2ff5c6c4418f3301c8b6d15eee
+    URL_HASH SHA256=aa57f35cf5ae17757d4dbce314d0ac1c0461ee62c4f1631d2b70f3d08740c6e3
     DOWNLOAD_NAME orbslam2-0.2.tar.gz
     DOWNLOAD_DIR ${ARCHIVE_DIR}
     DEPENDS opencv eigen pangolin
