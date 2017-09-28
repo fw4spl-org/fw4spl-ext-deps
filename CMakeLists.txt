@@ -5,8 +5,8 @@ project(ExtBinPkgs)
 set(FWEXT_CMAKE_RESOURCE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 option(ENABLE_EXPERIMENTAL_DEPS "Set to ON to build experimentals libraries" OFF)
-option(ENABLED_BUILD_INFINITAM "Set to ON to build infinitam" OFF)
-option(ENABLED_BUILD_ORB_SLAM2 "Set to ON to build ORB Slam 2" OFF)
+option(ENABLE_INFINITAM "Set to ON to build infinitam" OFF)
+option(ENABLE_ORB_SLAM2 "Set to ON to build ORB Slam 2" OFF)
 
 if(NOT ANDROID)
 
@@ -22,9 +22,9 @@ if(NOT ANDROID)
         list(APPEND SUBDIRECTORIES vlfeat)
     endif()
 
-    if(ENABLED_BUILD_INFINITAM)
-        if(NOT ENABLED_REALSENSE)
-            message(WARNING "ENABLED_REALSENSE should be set to ON if you want to build infinitam")
+    if(ENABLE_INFINITAM)
+        if(NOT ENABLE_REALSENSE)
+            message(WARNING "ENABLE_REALSENSE should be set to ON if you want to build infinitam")
         else()
             list(APPEND SUBDIRECTORIES infinitam)
         endif()
@@ -33,7 +33,7 @@ if(NOT ANDROID)
 
     list(APPEND SUBDIRECTORIES vlc)
 
-    if(ENABLED_BUILD_ORB_SLAM2)
+    if(ENABLE_ORB_SLAM2)
         list(APPEND SUBDIRECTORIES pangolin)
         list(APPEND SUBDIRECTORIES orbslam2)
     endif()
