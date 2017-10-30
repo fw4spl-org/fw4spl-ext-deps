@@ -16,7 +16,8 @@ set(CGOGN_CMAKE_ARGS ${COMMON_CMAKE_ARGS}
                         -DBOOST_ROOT=${CMAKE_INSTALL_PREFIX}
 )
 
-set(CACHED_URL https://github.com/fw4spl-org/cgogn-light/archive/2017-04.tar.gz )
+set(CGOGN_VERSION 2017-11)
+set(CACHED_URL https://github.com/fw4spl-org/cgogn-light/archive/${CGOGN_VERSION}.tar.gz )
 
 if(NOT CMAKE_SYSTEM_NAME STREQUAL Linux)
     set(CGOGN_DEPENDS libxml zlib)
@@ -25,10 +26,10 @@ endif()
 ExternalProject_Add(
     cgogn
     URL ${CACHED_URL}
-    URL_HASH SHA256=292ab0ad619c10b4ff1ad9e5481d6c12e134bcf78cc439079ee886225e7cb99f
+    URL_HASH SHA256=2d128823934f2c242e74b6f88d9303a4ade5ca5157ea84425e588b9ddae3d2f6
     DOWNLOAD_DIR ${ARCHIVE_DIR}
-    DOWNLOAD_NAME cgogn-light-2017-04.zip
-    DEPENDS ${CGOGN_DEPENDS} boost
+    DOWNLOAD_NAME cgogn-light-${CGOGN_VERSION}.zip
+    DEPENDS ${CGOGN_DEPENDS} boost eigen
     INSTALL_DIR ${CMAKE_INSTALL_PREFIX}
     CMAKE_ARGS ${CGOGN_CMAKE_ARGS}
 )
