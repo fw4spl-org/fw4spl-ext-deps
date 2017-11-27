@@ -1,6 +1,12 @@
 set(VLFEAT_PATCH_DIR ${CMAKE_CURRENT_SOURCE_DIR}/patch)
 set(VLFEAT_PATCH_CMD "${PATCH_EXECUTABLE}" -p1 -i ${VLFEAT_PATCH_DIR}/ConditionalMex.diff -d <SOURCE_DIR>)
 
+if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+    set(VLFEAT_DEBUG "Debug")
+else()
+    set(VLFEAT_DEBUG "Release")
+endif()
+
 ExternalProject_Add(
     vlfeat
     URL ${CACHED_URL}
@@ -10,9 +16,9 @@ ExternalProject_Add(
     BUILD_IN_SOURCE 1
     CONFIGURE_COMMAND ""
     PATCH_COMMAND ${VLFEAT_PATCH_CMD}
-    BUILD_COMMAND ${MAKE} -f <SOURCE_DIR>/Makefile.mak MEX="" DEBUG=${CMAKE_BUILD_TYPE} INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}    
+    BUILD_COMMAND ${MAKE} -f <SOURCE_DIR>/Makefile.mak MEX="" DEBUG=${VLFEAT_DEBUG} INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}
     INSTALL_COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/CopyFiles.cmake
-    STEP_TARGETS CopyConfigFileToInstall    
+    STEP_TARGETS CopyConfigFileToInstall
 )
 
 file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/CopyFiles.cmake
