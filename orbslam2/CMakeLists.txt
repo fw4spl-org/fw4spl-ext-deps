@@ -8,6 +8,7 @@ set(CACHED_URL https://github.com/fw4spl-org/ORB_SLAM2/archive/v0.2.tar.gz)
 
 set(ORBSLAM2_CMAKE_ARGS ${COMMON_CMAKE_ARGS}
     -DPangolin_DIR=${CMAKE_INSTALL_PREFIX}
+    -DCUDA_TOOLKIT_ROOT_DIR:PATH=${CUDA_TOOLKIT_ROOT_DIR}
 )
 
 ExternalProject_Add(
