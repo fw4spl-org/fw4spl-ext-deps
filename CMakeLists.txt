@@ -18,7 +18,6 @@ if(NOT ANDROID)
 
     if(ENABLE_EXPERIMENTAL_DEPS)
         list(APPEND SUBDIRECTORIES aram)
-        list(APPEND SUBDIRECTORIES vlfeat)
     endif()
 
     list(APPEND SUBDIRECTORIES vlc)
