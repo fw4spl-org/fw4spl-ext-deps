@@ -7,6 +7,7 @@ include(ExternalProject)
 set(ARAM_CMAKE_ARGS
     ${COMMON_CMAKE_ARGS}
     -DBUILD_SHARED_LIBS:BOOL=ON
+    -DCUDA_TOOLKIT_ROOT_DIR:PATH=${CUDA_TOOLKIT_ROOT_DIR}
 )
 
 set (CACHED_URL https://github.com/fw4spl-org/ARAM/archive/v1.0.tar.gz)
