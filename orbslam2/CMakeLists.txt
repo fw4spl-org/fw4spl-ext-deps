@@ -36,10 +36,23 @@ ExternalProject_Add_Step(orbslam2 CopyFindFileToInstall
 )
 
 # Convert txt vocabulary format to binary
-ExternalProject_Add_Step(orbslam2 generateVocabulary
+if(NOT "${CUDA_TOOLKIT_ROOT_DIR}" STREQUAL "")
+    if(WIN32)
+        set(ORBSLAM2_GENERATEVOCABULARY_CMD COMMAND set "PATH=${CUDA_TOOLKIT_ROOT_DIR}/bin;%PATH%")
+    else()
+        set(ORBSLAM2_GENERATEVOCABULARY_CMD COMMAND export "LD_LIBRARY_PATH=${CUDA_TOOLKIT_ROOT_DIR}/lib:\${LD_LIBRARY_PATH}")
+    endif()
+endif()
+
+set(ORBSLAM2_GENERATEVOCABULARY_CMD 
+    ${ORBSLAM2_GENERATEVOCABULARY_CMD}
     COMMAND ${CMAKE_INSTALL_PREFIX}/bin/bin_vocabulary
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_INSTALL_PREFIX}/bin/ORBvoc.bin ${CMAKE_INSTALL_PREFIX}/share/ORB_SLAM2/ORBvoc.bin
     COMMAND ${CMAKE_COMMAND} -E remove ${CMAKE_INSTALL_PREFIX}/bin/ORBvoc.txt ${CMAKE_INSTALL_PREFIX}/bin/ORBvoc.bin
+    )
+
+ExternalProject_Add_Step(orbslam2 generateVocabulary
+    ${ORBSLAM2_GENERATEVOCABULARY_CMD}
     WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}/bin
     COMMENT "Generate Vocabulary"
     DEPENDEES install
