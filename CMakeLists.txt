@@ -23,7 +23,6 @@ if(NOT ANDROID)
     list(APPEND SUBDIRECTORIES vlc)
 
     if(ENABLE_ORB_SLAM2)
-        list(APPEND SUBDIRECTORIES pangolin)
         list(APPEND SUBDIRECTORIES orbslam2)
     endif()
 else()
