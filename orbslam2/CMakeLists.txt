@@ -3,27 +3,26 @@ cmake_minimum_required(VERSION 3.0)
 project(orbslam2Builder)
 
 include(ExternalProject)
-
-set(CACHED_URL https://github.com/fw4spl-org/ORB_SLAM2/archive/v0.3.3.tar.gz)
+set(CACHED_URL https://codeload.github.com/fw4spl-org/ORB_SLAM2/tar.gz/b4005c57c57b498556d1233634d579ffa1dd611f)
 include( ${CMAKE_SOURCE_DIR}/cmake/findBinpkgs/fw-boost.cmake )
 
 set(ORBSLAM2_CMAKE_ARGS ${COMMON_CMAKE_ARGS}
-    -DPangolin_DIR=${CMAKE_INSTALL_PREFIX}
     -DCUDA_TOOLKIT_ROOT_DIR:PATH=${CUDA_TOOLKIT_ROOT_DIR}
     -DBoost_COMPILER:STRING=${Boost_COMPILER}
     -DBOOST_ROOT:PATH=${CMAKE_INSTALL_PREFIX}
     -DBoost_USE_DEBUG_PYTHON:BOOL=ON
     -DBoost_USE_MULTITHREADED:BOOL=ON
     -DBoost_USE_STATIC_LIBS:BOOL=OFF
+    -DBUILD_UTILITY:BOOL=ON
 )
 
 ExternalProject_Add(
     orbslam2
     URL ${CACHED_URL}
-    URL_HASH SHA256=ff49f5d93c2154246a8255d9c6faff3073ea44ba2a0535ee7c4195c0461dfe44
-    DOWNLOAD_NAME orbslam2-0.3.3.tar.gz
+    URL_HASH SHA256=5176c1b8ce4832b62bb68ab82db32a104f30fb5de4cf1d57efbf6a611532c8f1
+    DOWNLOAD_NAME orbslam2-0.3.3.1.tar.gz
     DOWNLOAD_DIR ${ARCHIVE_DIR}
-    DEPENDS boost opencv eigen pangolin
+    DEPENDS boost opencv eigen
     INSTALL_DIR ${CMAKE_INSTALL_PREFIX}
     CMAKE_ARGS ${ORBSLAM2_CMAKE_ARGS} 
 )
