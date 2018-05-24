@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.0)
 project(orbslam2Builder)
 
 include(ExternalProject)
-set(CACHED_URL https://github.com/fw4spl-org/ORB_SLAM2/archive/v0.5.tar.gz)
+set(CACHED_URL https://github.com/fw4spl-org/ORB_SLAM2/archive/v0.5.1.tar.gz)
 include( ${CMAKE_SOURCE_DIR}/cmake/findBinpkgs/fw-boost.cmake )
 
 set(ORBSLAM2_CMAKE_ARGS ${COMMON_CMAKE_ARGS}
@@ -19,8 +19,8 @@ set(ORBSLAM2_CMAKE_ARGS ${COMMON_CMAKE_ARGS}
 ExternalProject_Add(
     orbslam2
     URL ${CACHED_URL}
-    URL_HASH SHA256=224d46f8d8befcaa15a9065e64368cabfe404e59fa9ec5a0bff9a04aca2ac7bf 
-    DOWNLOAD_NAME orbslam2-0.5.tar.gz
+    URL_HASH SHA256=13ba469c1bdf89f77bafd50ca477ea1fbda10c0b5424ce7a65fdbcd2a22252e7 
+    DOWNLOAD_NAME orbslam2-0.5.1.tar.gz
     DOWNLOAD_DIR ${ARCHIVE_DIR}
     DEPENDS boost opencv eigen
     INSTALL_DIR ${CMAKE_INSTALL_PREFIX}
