@@ -3,29 +3,28 @@ cmake_minimum_required(VERSION 3.0)
 project(orbslam2Builder)
 
 include(ExternalProject)
-
-set(CACHED_URL https://github.com/fw4spl-org/ORB_SLAM2/archive/v0.3.3.tar.gz)
+set(CACHED_URL https://github.com/fw4spl-org/ORB_SLAM2/archive/v0.5.1.tar.gz)
 include( ${CMAKE_SOURCE_DIR}/cmake/findBinpkgs/fw-boost.cmake )
 
 set(ORBSLAM2_CMAKE_ARGS ${COMMON_CMAKE_ARGS}
-    -DPangolin_DIR=${CMAKE_INSTALL_PREFIX}
     -DCUDA_TOOLKIT_ROOT_DIR:PATH=${CUDA_TOOLKIT_ROOT_DIR}
     -DBoost_COMPILER:STRING=${Boost_COMPILER}
     -DBOOST_ROOT:PATH=${CMAKE_INSTALL_PREFIX}
     -DBoost_USE_DEBUG_PYTHON:BOOL=ON
     -DBoost_USE_MULTITHREADED:BOOL=ON
     -DBoost_USE_STATIC_LIBS:BOOL=OFF
+    -DBUILD_UTILITY:BOOL=ON
 )
 
 ExternalProject_Add(
     orbslam2
     URL ${CACHED_URL}
-    URL_HASH SHA256=ff49f5d93c2154246a8255d9c6faff3073ea44ba2a0535ee7c4195c0461dfe44
-    DOWNLOAD_NAME orbslam2-0.3.3.tar.gz
+    URL_HASH SHA256=13ba469c1bdf89f77bafd50ca477ea1fbda10c0b5424ce7a65fdbcd2a22252e7 
+    DOWNLOAD_NAME orbslam2-0.5.1.tar.gz
     DOWNLOAD_DIR ${ARCHIVE_DIR}
-    DEPENDS boost opencv eigen pangolin
+    DEPENDS boost opencv eigen
     INSTALL_DIR ${CMAKE_INSTALL_PREFIX}
-    CMAKE_ARGS ${ORBSLAM2_CMAKE_ARGS} 
+    CMAKE_ARGS ${ORBSLAM2_CMAKE_ARGS}
 )
 
 ExternalProject_Add_Step(orbslam2 CopyFindFileToInstall
@@ -44,7 +43,7 @@ if(NOT "${CUDA_TOOLKIT_ROOT_DIR}" STREQUAL "")
     endif()
 endif()
 
-set(ORBSLAM2_GENERATEVOCABULARY_CMD 
+set(ORBSLAM2_GENERATEVOCABULARY_CMD
     ${ORBSLAM2_GENERATEVOCABULARY_CMD}
     COMMAND ${CMAKE_INSTALL_PREFIX}/bin/bin_vocabulary
     COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_INSTALL_PREFIX}/bin/ORBvoc.bin ${CMAKE_INSTALL_PREFIX}/share/ORB_SLAM2/ORBvoc.bin
